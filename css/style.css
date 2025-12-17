@@ -1,0 +1,445 @@
+/* /* body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+.navbar {
+    background: #004aad;
+    color: white;
+    padding: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+}
+
+.navbar a:hover {
+    background: #003580;
+    border-radius: 5px;
+}
+
+.container {
+    padding: 25px;
+}
+
+.card-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.card:hover {
+    background: #e6f0ff;
+} */
+ /* General Page Formatting */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+/* Container Box */
+.container {
+    width: 500px;
+    background: white;
+    margin: 60px auto;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15);
+}
+
+/* Headings */
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+/* Form Styling */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* Submit Buttons */
+input[type="submit"] {
+    background: #1e90ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+}
+
+input[type="submit"]:hover {
+    background: #0c70d4;
+}
+
+/* Navbar */
+.navbar {
+    background: #1e90ff;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0px 10px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Dashboard Cards */
+.card-box {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.card {
+    width: 200px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.12);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0px 0px 6px rgba(0,0,0,0.15);
+}
+
+th {
+    background: #1e90ff;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Action Links */
+a {
+    color: #1e90ff;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #0c70d4;
+}
+/* LOGIN PAGE BOX */
+.login-container {
+    width: 420px;
+    background: white;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.16);
+    text-align: center;
+}
+
+/* Login Inputs */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #bbb;
+    border-radius: 6px;
+}
+
+/* Primary Button (Login) */
+.btn {
+    width: 100%;
+    background: #1e90ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background: #0c70d4;
+}
+
+/* Secondary Button (New User) */
+.btn-secondary {
+    width: 100%;
+    background: white;
+    color: #1e90ff;
+    padding: 10px;
+    border: 2px solid #1e90ff;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.btn-secondary:hover {
+    background: #e8f2ff;
+}
+
+/* Forgot Password Link */
+.forgot-link {
+    display: block;
+    margin-top: 12px;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+}
+
+.forgot-link:hover {
+    color: #0c70d4;
+    text-decoration: underline;
+} 
+/* ---------- Container ---------- */
+.container {
+    width: 450px;
+    background: white;
+    margin: 80px auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.16);
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* ---------- Headings ---------- */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* ---------- Form Labels ---------- */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+/* ---------- Input Fields ---------- */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* ---------- Submit Button ---------- */
+input[type="submit"] {
+    width: 100%;
+    background: #1e90ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background: #0c70d4;
+}
+
+/* ---------- Success & Error Messages ---------- */
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+.success {
+    color: green;
+    margin-top: 10px;
+}
+
+/* ---------- Login Link ---------- */
+.login-link {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+     form.filter-form {
+    margin-bottom: 20px;
+}
+form.filter-form label {
+    font-weight: bold;
+    margin-right: 8px;
+}
+form.filter-form select,
+form.filter-form input[type="text"] {
+    padding: 5px;
+    margin-right: 10px;
+}
+/* Table styling */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    text-align: left;
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Action buttons container */
+td a.btn {
+    display: inline-block;
+    margin: 4px 3px;
+    width: 70px;
+    text-align: center;
+}
+
+/* General button style */
+.btn {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Edit / Delete buttons */
+.btn-edit {
+    background-color: #ff9800; /* Orange */
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #e68900;
+}
+
+.btn-delete {
+    background-color: #f44336; /* Red */
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination .btn {
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+}
+
+.pagination .btn:hover {
+    background-color: #e0e0e0;
+}
+
+.pagination .btn-page.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .btn.disabled {
+    color: #999;
+    background-color: #f2f2f2;
+    pointer-events: none;
+    border-color: #ddd;
+}
+
+/* Responsive layout for small screens */
+@media (max-width: 600px) {
+    table {
+        font-size: 12px;
+    }
+
+    td a.btn {
+        width: auto;
+        padding: 5px 8px;
+    }
+
+    .pagination .btn {
+        padding: 5px 8px;
+        margin: 2px;
+    }
+}

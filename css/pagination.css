@@ -1,0 +1,31 @@
+#paginationControls {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+#paginationControls button {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #007bff;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#paginationControls button:hover {
+    opacity: 0.9;
+}
+
+#paginationControls button.active {
+    background: white;
+    color: #007bff;
+    font-weight: bold;
+}
+
+#paginationControls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

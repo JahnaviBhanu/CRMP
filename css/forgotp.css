@@ -1,0 +1,99 @@
+body {
+    background: #f4f7fb;
+    font-family: Arial, sans-serif;
+}
+
+.forgot-container {
+    width: 420px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-bottom: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background: #0d6efd;
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #0b5ed7;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 10px;
+    color: #555;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+}
+
+.success-msg {
+    color: green;
+    font-weight: bold;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.eye {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#timer {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.resend-btn {
+    margin-top: 12px;
+    background: #198754;
+}
+.show-password-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;      /* spacing between label and checkbox */
+    margin-top: 10px;
+}
+
+.show-password-label {
+    margin: 0;
+    font-weight: 600;
+}

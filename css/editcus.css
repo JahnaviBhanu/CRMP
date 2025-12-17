@@ -1,0 +1,119 @@
+/* =========================
+   EDIT CUSTOMER PAGE
+========================= */
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page heading */
+h2 {
+    text-align: center;
+    margin: 30px 0 20px;
+    color: #333;
+}
+
+/* Form container */
+form {
+    width: 420px;
+    margin: 0 auto 40px;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Labels */
+form label {
+    font-weight: 600;
+    color: #444;
+    display: block;
+    margin-bottom: 6px;
+}
+
+/* Inputs */
+form input[type="text"],
+form input[type="email"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+/* Input focus */
+form input:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+/* Submit button */
+form input[type="submit"] {
+    width: 100%;
+    background: #0d6efd;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background: #0b5ed7;
+}
+
+/* Error message */
+h3 {
+    text-align: center;
+    color: red;
+}
+/* Center container */
+.back-home-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 10px;
+}
+
+/* Button styling */
+.back-home-btn {
+    background-color: #0d6efd;          /* Primary Blue */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Hover effect */
+.back-home-btn:hover {
+    background-color: #0b5ed7;          /* Darker blue */
+    box-shadow: 0 6px 15px rgba(13, 110, 253, 0.35);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+/* Active (click) */
+.back-home-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(13, 110, 253, 0.25);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+    .back-home-btn {
+        width: 90%;
+        justify-content: center;
+    }
+}

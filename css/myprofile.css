@@ -1,0 +1,141 @@
+/* =========================
+   PAGE RESET
+========================= */
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* =========================
+   PROFILE CONTAINER
+========================= */
+.container {
+    width: 360px;
+    background: #ffffff;
+    margin: 80px auto 140px;
+    padding: 30px 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   TITLE
+========================= */
+.container h2 {
+    margin-bottom: 8px;
+    color: #222;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* =========================
+   PROFILE IMAGE (FIXED)
+========================= */
+.container img.profile-pic {
+    width: 140px !important;
+    height: 140px !important;
+    max-width: 140px !important;
+    max-height: 140px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 4px solid #e5e7eb !important;
+    display: block !important;
+    margin: 18px auto 20px !important;
+    background: #fff;
+}
+
+/* =========================
+   NO IMAGE TEXT
+========================= */
+.container p {
+    color: #888;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+/* =========================
+   FORMS
+========================= */
+.container form {
+    margin-top: 15px;
+}
+
+/* FILE INPUT */
+.container input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fafafa;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.upload-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    background: #22c55e;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.upload-btn:hover {
+    background: #16a34a;
+}
+
+.delete-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+}
+
+/* =========================
+   BACK LINK
+========================= */
+.container a {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   GLOBAL IMG OVERRIDE FIX
+========================= */
+img {
+    max-width: none !important;
+}

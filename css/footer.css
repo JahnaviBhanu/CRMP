@@ -1,0 +1,21 @@
+
+    .crm-footer {
+        width: 100%;
+        text-align: center;
+        padding: 15px 0;
+        background: #f5f7fb;
+        color: #444;
+        font-size: 14px;
+        border-top: 1px solid #e0e0e0;
+        margin-top: 40px;
+    }
+
+    .crm-footer a {
+        color: #007bff;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+
+    .crm-footer a:hover {
+        text-decoration: underline;
+    }

@@ -1,0 +1,30 @@
+body {
+    font-family: Arial;
+}
+
+.heading {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.req-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.req-table th {
+    background-color: #eaeaea;
+    padding: 8px;
+    font-weight: bold;
+    border: 1px solid #333;
+}
+
+.req-table td {
+    padding: 8px;
+    border: 1px solid #333;
+}
+
+.data-row:nth-child(even) {
+    background-color: #f9f9f9;
+}

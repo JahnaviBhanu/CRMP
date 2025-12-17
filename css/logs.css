@@ -1,0 +1,129 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f7fa;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  background: #fff;
+  margin: 40px auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+table th {
+  background-color: #007bff;
+  color: white;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination a, .pagination span {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+}
+
+
+
+.pagination .active {
+ background-color: #fff;  /* White background for active page */
+  color: #007bff;           /* Keep text color blue for active page */
+  font-weight: bold;        /* Make the active page bold */
+  border: 1px solid #007bff; 
+}
+
+.back-btn {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-btn a {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.back-btn a:hover {
+  background-color: #0056b3;
+}
+
+/* Center container */
+.back-home-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 10px;
+}
+
+/* Button styling */
+.back-home-btn {
+    background-color: #0d6efd;          /* Primary Blue */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Hover effect */
+.back-home-btn:hover {
+    background-color: #0b5ed7;          /* Darker blue */
+    box-shadow: 0 6px 15px rgba(13, 110, 253, 0.35);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+/* Active (click) */
+.back-home-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(13, 110, 253, 0.25);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+    .back-home-btn {
+        width: 90%;
+        justify-content: center;
+    }
+}
