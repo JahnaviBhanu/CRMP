@@ -35,6 +35,12 @@
 
 
         <button type="submit" class="search-btn">Search</button>
+<!--<button type="button" class="clear-btn"
+        onclick="window.location='index.cfm?fuse=customers'">
+    Clear
+</button>-->
+
+
     </form>
 
     <!-- Download -->

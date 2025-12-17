@@ -3,28 +3,39 @@
     <cflocation url="login.cfm">
 </cfif>
 
+<!-- Read filters from session -->
+<cfparam name="session.requestFilters.department" default="">
+<cfparam name="session.requestFilters.searchText" default="">
+
+<cfset department = session.requestFilters.department>
+<cfset searchText = session.requestFilters.searchText>
+
+
 
 
 <!--- Query with filters --->
-<cfquery name="getRequests" datasource="crmp_db">
-    SELECT 
-        req_id,
-        request_title,
-        request_desc,
-        department
+<cfquery name="getRequests" datasource="#application.datasource#">
+    SELECT req_id, request_title, request_desc, department
     FROM requests
     WHERE 1=1
-    <cfif structKeyExists(url,"department") AND len(trim(url.department))>
-        AND department = <cfqueryparam value="#url.department#" cfsqltype="cf_sql_varchar">
+
+    <cfif len(trim(department))>
+        AND department = 
+        <cfqueryparam value="#department#" cfsqltype="cf_sql_varchar">
     </cfif>
-    <cfif structKeyExists(url,"searchText") AND len(trim(url.searchText))>
+
+    <cfif len(trim(searchText))>
         AND (
-            request_title LIKE <cfqueryparam value="%#url.searchText#%" cfsqltype="cf_sql_varchar">
-            OR request_desc LIKE <cfqueryparam value="%#url.searchText#%" cfsqltype="cf_sql_varchar">
+            request_title LIKE 
+            <cfqueryparam value="%#searchText#%" cfsqltype="cf_sql_varchar">
+            OR request_desc LIKE 
+            <cfqueryparam value="%#searchText#%" cfsqltype="cf_sql_varchar">
         )
     </cfif>
+
     ORDER BY req_id DESC
 </cfquery>
+
 
 <!--- Get the logged-in user's email --->
 

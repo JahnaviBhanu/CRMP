@@ -40,6 +40,12 @@
     <cfinclude template="views/myprofile.cfm">
 
 <cfelseif fuse eq "viewrequests">
+    <!-- store current filters for PDF -->
+<cfset session.requestFilters = {
+    department = url.department,
+    searchText = url.searchText
+}>
+
 
     <cftry>
         <cfset rc.data = application.controller.fetchRequests(
@@ -123,6 +129,8 @@
 <cfelseif fuse eq "downloadcus">
     <cfinclude template="/CRMP/reports/downloadCustomers.cfm">
 
+<cfelseif fuse eq "downloadreq">
+    <cfinclude template="/CRMP/reports/view_downloadRequests.cfm">
 
 <cfelseif fuse eq "addcus">
 

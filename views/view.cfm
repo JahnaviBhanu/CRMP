@@ -55,11 +55,23 @@
         <a href="index.cfm?fuse=viewRequests" class="clear-btn">Clear</a>
 
         
-
         <cfoutput>
-            <a href="reports/view_downloadRequests.cfm?department=#url.department#" 
-               target="_blank" class="btn-pdf">Download PDF</a>
-        </cfoutput>
+<cfset downloadURL = "index.cfm?fuse=downloadreq">
+
+<cfif len(trim(url.department))>
+    <cfset downloadURL &= "&department=" & urlEncodedFormat(url.department)>
+</cfif>
+
+<cfif len(trim(url.searchText))>
+    <cfset downloadURL &= "&searchText=" & urlEncodedFormat(url.searchText)>
+</cfif>
+
+<a href="#downloadURL#" target="_blank" class="btn-pdf">
+    Download PDF
+</a>
+</cfoutput>
+
+
     </form>
 
     <!-- FIX: Correct variable from router -->
