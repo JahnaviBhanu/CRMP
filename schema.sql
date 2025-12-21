@@ -23,12 +23,15 @@ request_desc	varchar(500)	YES
 department	varchar(50)	YES			
 
 -- Logs Table(user_logs)
-log_id	int	NO	PRI		auto_increment
-username	varchar(100)	YES			
-action	varchar(100)	YES			
-request_id	int	YES			
-details	varchar(255)	YES			
-timestamp	datetime	YES		CURRENT_TIMESTAMP	DEFAULT_GENERATED
+CREATE TABLE user_logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100),
+    action VARCHAR(100),
+    request_id INT NULL,
+    details VARCHAR(255),
+    timestamp DATETIME DEFAULT NOW()
+);
+
 
 
 -- Customers Table(customers)
