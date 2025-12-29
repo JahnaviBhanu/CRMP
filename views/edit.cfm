@@ -15,8 +15,16 @@
 
 
 
-<cfset action = "Logged In">
-<cflog file="userActivity" type="information" text="User #session.username# performed #action# at #now()#">
+<cfset logText =
+    'Request Edited by user=' & session.username &
+    ' | RequestID=' & url.req_id
+>
+
+<cflog
+    file="crmActivity"
+    type="information"
+    text="#logText#">
+
 
 
 <div class="container">
