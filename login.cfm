@@ -86,14 +86,14 @@
     </form>
 
     <!-- Registration -->
-    <form action="/CRMP/Pages/register.cfm" method="get">
+    <form action="/CRMP/views/register.cfm" method="get">
         <button type="submit" class="btn-secondary">
             New User? Create Account
         </button>
     </form>
 
     <!-- Forgot Password -->
-    <a href="/CRMP/Pages/forgotPassword.cfm" class="forgot-link">
+    <a href="/CRMP/views/forgotPassword.cfm" class="forgot-link">
         Forgot Password?
     </a>
 </div>
