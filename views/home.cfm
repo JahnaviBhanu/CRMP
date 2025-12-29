@@ -9,9 +9,6 @@
 
 <body>
 
-<!-- ✅ Top Navigation -->
-
-
 
 <!-- ✅ Welcome Section -->
 <div class="welcome">

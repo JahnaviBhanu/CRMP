@@ -127,10 +127,10 @@
     <cfinclude template="views/customers.cfm">
 
 <cfelseif fuse eq "downloadcus">
-    <cfinclude template="/CRMP/reports/downloadCustomers.cfm">
+    <cfinclude template="/CRMP/views/downloadCustomers.cfm">
 
 <cfelseif fuse eq "downloadreq">
-    <cfinclude template="/CRMP/reports/view_downloadRequests.cfm">
+    <cfinclude template="/CRMP/views/view_downloadRequests.cfm">
 
 <cfelseif fuse eq "addcus">
 
@@ -146,7 +146,7 @@
         <cflocation url="index.cfm?fuse=customers" addtoken="no">
     <cfelse>
         <cfset rc.formErrors = formRes>
-        <cfinclude template="formValidationFailed.cfm">
+        <cfinclude template="/CRMP/views/formValidationFailed.cfm">
     </cfif>
 
 <cfelseif fuse eq "editcus">

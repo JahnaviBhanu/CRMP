@@ -42,7 +42,7 @@
 
     <cfset var pageName = lcase(getFileFromPath(arguments.targetPage))>
 
-    <cfset var noLayoutPages = "login.cfm,register.cfm,forgotpassword.cfm,resetpassword.cfm">
+    <cfset var noLayoutPages = "login.cfm,register.cfm,forgotpassword.cfm,resetpassword.cfm,help.cfm,privacy.cfm,contact.cfm">
 
     <cfif NOT listFindNoCase(noLayoutPages, pageName)>
         <cfif NOT structKeyExists(session, "isLoggedIn") OR session.isLoggedIn NEQ true>
@@ -63,7 +63,7 @@
     <cfargument name="targetPage" required="true">
 
     <cfset var pageName = lcase(getFileFromPath(arguments.targetPage))>
-    <cfset var noLayoutPages = "login.cfm,register.cfm,forgotpassword.cfm,reset.cfm">
+    <cfset var noLayoutPages = "login.cfm,register.cfm,forgotpassword.cfm,reset.cfm,help.cfm,privacy.cfm,contact.cfm">
 
     <!--- Skip footer for excluded pages --->
     <cfif NOT listFindNoCase(noLayoutPages, pageName)>
