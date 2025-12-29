@@ -11,6 +11,20 @@
     )
 </cfquery>
 
+
+<!--- FILE LOG --->
+<cfset logText =
+    'Request deleted by user=' & session.username &
+    '  | Title=' & form.title
+>
+
+<cflog
+    file="crmActivity"
+    type="information"
+    text="#logText#">
+
+
+
 <!-- Get the last inserted request -->
 <cfquery name="getLastID" datasource="crmp_db">
     SELECT MAX(req_id) AS last_id FROM requests
@@ -26,6 +40,8 @@
         <cfqueryparam value="User #session.username# created new request ID #getLastID.last_id#" cfsqltype="cf_sql_varchar">
     )
 </cfquery>
+<!--- AFTER INSERT QUERY --->
+
 
 
 <cflocation url="/CRMP/index.cfm?fuse=viewRequests" addtoken="no">

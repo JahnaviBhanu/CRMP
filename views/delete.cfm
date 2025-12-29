@@ -12,6 +12,15 @@
     DELETE FROM requests
     WHERE req_id = <cfqueryparam value="#url.req_id#" cfsqltype="cf_sql_integer">
 </cfquery>
+<cfset logText =
+    'Request Deleted by user=' & session.username &
+    ' | RequestID=' & url.req_id
+>
+
+<cflog
+    file="crmActivity"
+    type="information"
+    text="#logText#">
 
 <cfquery datasource="#application.datasource#">
     INSERT INTO user_logs (username, action, request_id, details)

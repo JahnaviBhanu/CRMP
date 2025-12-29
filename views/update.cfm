@@ -13,6 +13,18 @@
         request_desc = <cfqueryparam value="#form.desc#" cfsqltype="cf_sql_varchar">
     WHERE req_id = <cfqueryparam value="#form.req_id#" cfsqltype="cf_sql_integer">
 </cfquery>
+<!--- BUILD LOG MESSAGE (SAFE) --->
+
+<cfset logText =
+    'Request Updated by user=' & session.username &
+    ' | RequestID=' & form.req_id
+>
+
+<cflog
+    file="crmActivity"
+    type="information"
+    text="#logText#">
+
 
 <!-- Log the update -->
 <cfquery datasource="#application.datasource#">
