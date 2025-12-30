@@ -3,7 +3,7 @@
 This is a Customer Relationship Management (CRM) Application built using CFML (ColdFusion Markup Language) and MySQL.
 The goal of this project is to implement a real-world backend-driven web application with authentication, customer management, scheduling, and file handling.
 
-About the Project
+#About the Project
 
 This CRM application helps manage customers and related activities in an organized way.
 It follows a structured MVC-style approach using CFML components (.cfc) and views (.cfm).
@@ -26,7 +26,7 @@ Upload files related to customers
 
 All data is stored in MySQL, making this a complete database-driven CRM system.
 
-Features
+#Features
 
 User Registration & Login
 
@@ -64,7 +64,7 @@ ColdFusion Server (Adobe / Lucee)
 
 MVC-style Architecture
 
-Folder Structure
+#Folder Structure
 CRM-Application/
 │
 ├── components/
