@@ -4,8 +4,6 @@
 </cfif>
 
 
-
-
 <!--- LOAD PROFILE PIC FROM DB ON PAGE LOAD --->
 <cfif NOT structKeyExists(session, "profilePic")>
   <cfquery name="getPic" datasource="#application.datasource#">

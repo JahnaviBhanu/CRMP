@@ -6,7 +6,6 @@
 <!--- Process login only when form is submitted --->
 <cfif len(trim(form.username)) AND len(trim(form.password))>
 
- <!--- Hash password (MUST match DB hashing) --->
    
    <cfquery name="qUser" datasource="#application.datasource#">
    SELECT id, username, email, profile_pic, role
@@ -15,9 +14,9 @@
       AND password = <cfqueryparam value="#form.password#" cfsqltype="cf_sql_varchar">
 </cfquery>
 
-<cfif qUser.recordCount>
+<cfif qUser.recordCount >
      <cfset sessionRotate()>
-    <!--- Session values (ONLY what you want) --->
+    <!--- Session values --->
     <cfset session.isLoggedIn = true>
     <cfset session.userid    = qUser.id>
     <cfset session.username  = qUser.username>
@@ -66,12 +65,14 @@
 
     <!-- Login error message -->
     <cfif len(loginError)>
+        <cfoutput>
         <div class="error-box" style="color:red;">
             #loginError#
         </div>
+        </cfoutput>
     </cfif>
 
-    <form action="login.cfm" method="post">
+    <form method="post">
 
         <label>Username:</label>
         <input type="text" name="username"  required>

@@ -6,7 +6,6 @@
 </cfif>
 
 
-
 <link rel="stylesheet" href="css/customer.css">
 <link rel="stylesheet" href="css/pagination.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -28,8 +27,14 @@
        class="form-control"
        onkeyup="loadCustomers(1)">
         <button class="">
-    <a href="reports/downloadCustomers.cfm" target="_blank" class="download-btn">
-    <i class="fa fa-download"></i></a>
+
+        <a href="index.cfm?fuse=downloadcus"
+   target="_blank"
+   class="download-btn"
+   title="Download Customers">
+    <i class="fa fa-download"></i>
+</a>
+    
 
 
     </div>
@@ -95,5 +100,9 @@
 
 </div>
 
-<a href="home.cfm" class="home-btn">&#8592; Back to Home</a>
+<div class="back-home-wrapper">
+    <a href="index.cfm?fuse=home" class="back-home-btn">
+        ⬅ Back To Home
+    </a>
+</div>
 <script src="Js/pagination.js"></script>
