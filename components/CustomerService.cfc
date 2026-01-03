@@ -1,15 +1,23 @@
-<cfcomponent displayname="Customer API" output="false">
+<cfcomponent output="false">
 
-    <!-- GET ALL CUSTOMERS -->
-    <cffunction name="getCustomers" access="remote" returnformat="json" output="false">
-        <cfquery datasource="crmp_db" name="q">
-            SELECT * FROM customers ORDER BY id DESC
+    <!-- GET CUSTOMERS -->
+    <cffunction name="getCustomers" returntype="array">
+        <cfargument name="searchText" default="">
+
+        <cfquery name="q" datasource="#application.datasource#">
+            SELECT id, name, email, phone
+            FROM customers
+            <cfif len(trim(arguments.searchText))>
+                WHERE name LIKE <cfqueryparam value="%#arguments.searchText#%">
+                   OR email LIKE <cfqueryparam value="%#arguments.searchText#%">
+                   OR phone LIKE <cfqueryparam value="%#arguments.searchText#%">
+            </cfif>
+            ORDER BY id DESC
         </cfquery>
 
-        <!-- Convert query to array of structs -->
-        <cfset result = []>
+        <cfset var arr = []>
         <cfloop query="q">
-            <cfset arrayAppend(result, {
+            <cfset arrayAppend(arr, {
                 id = q.id,
                 name = q.name,
                 email = q.email,
@@ -17,55 +25,44 @@
             })>
         </cfloop>
 
-        <cfreturn result>
+        <cfreturn arr>
     </cffunction>
 
-    <!-- ADD CUSTOMER -->
-    <cffunction name="addCustomer" access="remote" returnformat="json" output="false">
-        <cfargument name="name" required="true">
-        <cfargument name="email" required="true">
-        <cfargument name="phone" required="true">
+    <!-- ADD -->
+    <cffunction name="addCustomer">
+        <cfargument name="data" type="struct">
 
         <cfquery datasource="crmp_db">
-            INSERT INTO customers(name,email,phone)
-            VALUES(
-                <cfqueryparam value="#arguments.name#">,
-                <cfqueryparam value="#arguments.email#">,
-                <cfqueryparam value="#arguments.phone#">
+            INSERT INTO customers (name, email, phone)
+            VALUES (
+                <cfqueryparam value="#data.name#">,
+                <cfqueryparam value="#data.email#">,
+                <cfqueryparam value="#data.phone#">
             )
         </cfquery>
-
-        <cfreturn {success:true, message:"Customer added!"}>
     </cffunction>
 
     <!-- UPDATE -->
-    <cffunction name="updateCustomer" access="remote" returnformat="json" output="false">
-        <cfargument name="id" required="true">
-        <cfargument name="name" required="true">
-        <cfargument name="email" required="true">
-        <cfargument name="phone" required="true">
+    <cffunction name="updateCustomer">
+        <cfargument name="data" type="struct">
 
-        <cfquery datasource="crmp_db">
+        <cfquery datasource="#application.datasource#">
             UPDATE customers
-            SET
-                name = <cfqueryparam value="#arguments.name#">,
-                email = <cfqueryparam value="#arguments.email#">,
-                phone = <cfqueryparam value="#arguments.phone#">
-            WHERE id = <cfqueryparam value="#arguments.id#">
+            SET name  = <cfqueryparam value="#data.name#">,
+                email = <cfqueryparam value="#data.email#">,
+                phone = <cfqueryparam value="#data.phone#">
+            WHERE id = <cfqueryparam value="#data.id#" cfsqltype="cf_sql_integer">
         </cfquery>
-
-        <cfreturn {success:true, message:"Customer updated!"}>
     </cffunction>
 
     <!-- DELETE -->
-    <cffunction name="deleteCustomer" access="remote" returnformat="json" output="false">
-        <cfargument name="id" required="true">
+    <cffunction name="deleteCustomer">
+        <cfargument name="id">
 
-        <cfquery datasource="crmp_db">
-            DELETE FROM customers WHERE id=<cfqueryparam value="#arguments.id#">
+        <cfquery datasource="#application.datasource#">
+            DELETE FROM customers
+            WHERE id = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_integer">
         </cfquery>
-
-        <cfreturn {success:true, message:"Customer deleted!"}>
     </cffunction>
 
 </cfcomponent>

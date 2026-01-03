@@ -1,15 +1,21 @@
+/* ===============================
+   GLOBAL CONTAINER
+================================ */
 .container {
     padding: 30px;
-    text-align: center;
 }
 
+/* Page title */
 .page-title {
+    text-align: center;
     font-size: 30px;
     font-weight: 700;
     margin-bottom: 25px;
 }
 
-/* Search bar */
+/* ===============================
+   SEARCH BAR
+================================ */
 .search-section {
     display: flex;
     justify-content: center;
@@ -24,7 +30,9 @@
     border: 1px solid #ccc;
 }
 
-/* Add form */
+/* ===============================
+   ADD CUSTOMER FORM
+================================ */
 .add-form {
     display: flex;
     justify-content: center;
@@ -44,7 +52,9 @@
     border: 1px solid #ddd;
 }
 
-/* Buttons */
+/* ===============================
+   BUTTONS
+================================ */
 .btn {
     padding: 10px 18px;
     border-radius: 6px;
@@ -53,35 +63,43 @@
     font-weight: 600;
 }
 
+/* Add button */
 .btn-primary {
     background: #1976ff;
     color: white;
 }
 
-.btn-green {
-    background: #16c172;
+.btn-primary:hover {
+    background: #0f5de2;
+}
+
+/* EDIT BUTTON (BLUE) */
+.btn-success {
+    background: #0d6efd;
     color: white;
 }
 
-.btn-download {
-    background: #007bff;
-    color: white;
+.btn-success:hover {
+    background: #084298;
 }
 
+/* DELETE BUTTON (RED) */
 .btn-danger {
-    background: #d9534f;
+    background:#c9302c;
     color: white;
 }
 
-.btn-secondary {
-    background: #ddd;
-    color: #333;
+.btn-danger:hover {
+    background: #c9302c;
 }
 
-/* Table */
+/* ===============================
+   TABLE
+================================ */
 .customer-table {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     margin-top: 20px;
 }
 
@@ -89,7 +107,7 @@
     background: #007bff;
     color: white;
     padding: 12px;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .customer-table td {
@@ -97,7 +115,72 @@
     border-bottom: 1px solid #eee;
 }
 
-/* Modal Overlay */
+/* Center everything properly */
+.customer-table th,
+.customer-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Fix Action column width */
+.customer-table th:last-child,
+.customer-table td:last-child {
+    width: 180px;
+}
+
+/* ===============================
+   PAGINATION
+================================ */
+.pagination-container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.pagination-container button {
+    padding: 8px 14px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pagination-container button.active {
+    background: #0056b3;
+    font-weight: bold;
+}
+
+.pagination-container button:hover {
+    background: #0069d9;
+}
+
+/* ===============================
+   DOWNLOAD BUTTON
+================================ */
+.download-btn {
+    background: #0084ff;
+    color: white;
+    border: none;
+    width: 55px;
+    height: 45px;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+}
+
+.download-btn:hover {
+    background: #006fe0;
+}
+
+/* ===============================
+   MODAL
+================================ */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -108,9 +191,9 @@
     display: none;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
-/* Modal Box */
 .modal-box {
     width: 520px;
     background: white;
@@ -119,15 +202,10 @@
     box-shadow: 0 10px 30px rgba(0,0,0,0.25);
 }
 
-/* Modal Header */
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.modal-header h2 {
-    margin: 0;
 }
 
 .close-x {
@@ -135,7 +213,6 @@
     cursor: pointer;
 }
 
-/* Modal Body */
 .modal-body label {
     display: block;
     margin-top: 10px;
@@ -150,88 +227,58 @@
     margin-top: 5px;
 }
 
-/* Modal Footer */
 .modal-footer {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
     margin-top: 18px;
 }
-/* Modal fixes */
-.modal-content {
-    width: 500px;     /* Increase width */
-    max-width: 95%;
-    padding: 20px;
-    border-radius: 10px;
-}
 
-.modal-content input {
-    width: 100%;
-    box-sizing: border-box;
-}
-.pagination-container {
-    margin-top: 20px;
+/* ===============================
+   BACK TO HOME BUTTON
+================================ */
+/* Center container for home button */
+.back-home-wrapper {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    margin: 30px 0 10px;
 }
 
-.pagination-container button {
-    padding: 6px 12px;
+/* Button styling */
+.back-home-btn {
+    background-color: #0d6efd;          /* Primary Blue */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
+    transition: all 0.3s ease;
     border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.pagination-container button.active {
-    background: #0056b3;
-    font-weight: bold;
-}
-
-.pagination-container button:hover {
-    background: #0069d9;
-}
-
-.download-btn {
-    background: #0084ff;      /* bright blue */
-    color: white;
-    border: none;
-    width: 55px;
-    height: 45px;
-    border-radius: 10px;
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    transition: 0.2s ease;
+    gap: 6px;
 }
 
 /* Hover effect */
-.download-btn:hover {
-    background: #006fe0;
-} 
-.btn-red {
-    background: #d9534f;
-    color: white;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
+.back-home-btn:hover {
+    background-color: #0b5ed7;          /* Darker blue */
+    box-shadow: 0 6px 15px rgba(13, 110, 253, 0.35);
+    transform: translateY(-2px);
+    color: #ffffff;
 }
 
-.btn-red:hover {
-    background: #c9302c;
-}
-/* Edit button styling */
-.btn-success {
-    background-color: #16c172; /* green color */
-    color: white;
+/* Active (click) */
+.back-home-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(13, 110, 253, 0.25);
 }
 
-.btn-success:hover {
-    background-color: #138f5a; /* darker green on hover */
+/* Mobile responsiveness */
+@media (max-width: 576px) {
+    .back-home-btn {
+        width: 90%;
+        justify-content: center;
+    }
 }

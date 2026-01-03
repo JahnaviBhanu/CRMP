@@ -1,5 +1,3 @@
-<!--- router.cfm --->
-
 <!--- Make sure application.controller exists --->
 <cfif NOT structKeyExists(application, "controller")>
     <cfabort showerror="Controller not found! Check Application.cfc">
@@ -110,76 +108,86 @@
     </cftry>
 
     <cfinclude template="views/registredUsers.cfm">
-
-<cfelseif fuse eq "customers">
-
-    <cfparam name="url.searchText" default="">
-
-    <cftry>
-        <cfset rc.data = application.controller.fetchCustomers(
-            searchText = url.searchText
-        ) />
-    <cfcatch>
-        <cflog file="appDebug" text="router.customers error: #cfcatch.message#">
-    </cfcatch>
-    </cftry>
-
-    <cfinclude template="views/customers.cfm">
-
 <cfelseif fuse eq "downloadcus">
     <cfinclude template="/CRMP/views/downloadCustomers.cfm">
 
 <cfelseif fuse eq "downloadreq">
     <cfinclude template="/CRMP/views/view_downloadRequests.cfm">
 
-<cfelseif fuse eq "addcus">
+
+<cfelseif fuse eq "customers">
+    <cfinclude template="views/customer.cfm">
+
+
+<cfelseif fuse eq "api_getcustomers">
+
+    <cfparam name="url.searchText" default="">
 
     <cftry>
-        <cfset formRes = application.controller.createCustomer(info=form) />
+        <cfset data = application.customerService.getCustomers(
+            searchText = url.searchText
+        )>
+
+        <cfcontent type="application/json">
+        <cfoutput>#serializeJSON({
+            success = true,
+            DATA = data
+        })#</cfoutput>
+
     <cfcatch>
-        <cflog file="appDebug" text="router.addcus error: #cfcatch.message#">
-        <cfset formRes = "Error saving customer.">
+        <cfcontent type="application/json">
+        <cfoutput>#serializeJSON({
+            success = false,
+            message = cfcatch.message
+        })#</cfoutput>
     </cfcatch>
     </cftry>
 
-    <cfif len(formRes) lt 11>
-        <cflocation url="index.cfm?fuse=customers" addtoken="no">
-    <cfelse>
-        <cfset rc.formErrors = formRes>
-        <cfinclude template="/CRMP/views/formValidationFailed.cfm">
-    </cfif>
+    <cfabort>
 
-<cfelseif fuse eq "editcus">
+<cfelseif fuse eq "api_addcustomer">
+
+    <cfcontent type="application/json">
 
     <cftry>
-        <cfset updatedId = application.controller.editCustomer(info=form) />
+        <cfset application.controller.createCustomer(info=form) />
+
+        <cfoutput>#serializeJSON({
+            success = true,
+            message = "Customer added successfully"
+        })#</cfoutput>
+
     <cfcatch>
-        <cflog file="appDebug" text="router.editcus error: #cfcatch.message#">
-        <cfset updatedId = 0>
+        <cfoutput>#serializeJSON({
+            success = false,
+            message = cfcatch.message
+        })#</cfoutput>
     </cfcatch>
     </cftry>
 
-    <cfif updatedId GT 0>
-        <cflocation url="index.cfm?fuse=customers" addtoken="false">
-    <cfelse>
-        <h3 style="color:red;">Failed to update customer</h3>
-    </cfif>
+    <cfabort>
 
 
-    
 
-<cfelseif fuse eq "deletecus">
-
+<cfelseif fuse eq "api_editcustomer">
     <cftry>
-        <cfif isNumeric(url.delete_id)>
-            <cfset application.controller.deleteCustomer(id=url.delete_id) />
-        </cfif>
+        <cfset application.controller.editCustomer(info=form) />
+        <cfoutput>#serializeJSON({success=true})#</cfoutput>
     <cfcatch>
-        <cflog file="appDebug" text="router.deletecus error: #cfcatch.message#">
+        <cfoutput>#serializeJSON({success=false,message=cfcatch.message})#</cfoutput>
     </cfcatch>
     </cftry>
+    <cfabort>
 
-    <cflocation url="index.cfm?fuse=customers" addtoken="false">
-
+<cfelseif fuse eq "api_deletecustomer">
+    <cftry>
+        <cfset application.controller.deleteCustomer(id=form.id) />
+        <cfoutput>#serializeJSON({success=true})#</cfoutput>
+    <cfcatch>
+        <cfoutput>#serializeJSON({success=false,message=cfcatch.message})#</cfoutput>
+    </cfcatch>
+    </cftry>
+    <cfabort>
 
 </cfif>
+

@@ -13,7 +13,7 @@
   <cffunction name="onApplicationStart" returnType="boolean" output="false">
     <cftry>
       <cfset application.controller = createObject("component", "CRMP.controller")>
-      <cfset application.customers  = createObject("component", "components.customersAPI")>
+      <cfset application.customerService  = createObject("component", "components.CustomerService")>
       <cfset application.datasource = this.datasource>
       <cfset application.startTime = now()>
       <cfreturn true>
@@ -30,7 +30,6 @@
 </cffunction>
 
 
-  
 
 <cffunction name="onRequestStart" returnType="boolean" output="true">
     <cfargument name="targetPage" required="true">
@@ -54,6 +53,11 @@
     <cfif NOT listFindNoCase(noLayoutPages, pageName)>
         <cfinclude template="/CRMP/includes/header.cfm">
     </cfif>
+    
+    <!--- Disable client caching --->
+    <cfheader name="Cache-Control" value="no-cache, no-store, must-revalidate">
+    <cfheader name="Pragma" value="no-cache">
+    <cfheader name="Expires" value="-1">
 
     <cfreturn true>
 </cffunction>

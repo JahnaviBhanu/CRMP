@@ -110,102 +110,65 @@
     </cffunction>
 
 
-  
-   <cffunction name="fetchCustomers" access="public" returntype="query" output="false">
-    <cfargument name="searchText" required="false" default="">
-    <cfset var q = "">
+    <!-- GET -->
+    <cffunction name="getCustomers" returntype="struct">
+    <cfargument name="params" type="struct">
 
-    <cftry>
-        <cfquery name="q" datasource="#this.datasource#">
-            SELECT id, name, email, phone
-            FROM customers
-            WHERE 1 = 1
+    <cfset var data = application.customerService.getCustomers(
+        searchText = params.searchText ?: ""
+    )>
 
-            <cfif len(trim(arguments.searchText))>
-                AND (
-                    name LIKE <cfqueryparam value="%#arguments.searchText#%" cfsqltype="cf_sql_varchar">
-                    OR
-                    email LIKE <cfqueryparam value="%#arguments.searchText#%" cfsqltype="cf_sql_varchar">
-                )
-            </cfif>
+    <cfreturn {
+    SUCCESS = true,
+    DATA = data
+        }>
 
-            ORDER BY id DESC
-        </cfquery>
+</cffunction>
 
-    <cfcatch type="any">
-        <cflog file="appDebug" text="fetchCustomers error: #cfcatch.message#">
-        <cfset q = queryNew("id,name,email,phone")>
-    </cfcatch>
-    </cftry>
 
-    <cfreturn q>
+<cffunction name="ping" access="public" returntype="string">
+    <cfreturn "CONTROLLER WORKING">
 </cffunction>
 
 
 
-    <!--- Customers CRUD: create, edit, delete --->
-    <cffunction name="createCustomer" access="public" returntype="numeric" output="false">
-        <cfargument name="info" type="struct" required="true">
-        <cfset var newId = 0>
-        <cftry>
-            <cfquery datasource="#this.datasource#" name="qInsert">
-                INSERT INTO customers (name, email, phone)
-                VALUES (
-                    <cfqueryparam value="#arguments.info.name#" cfsqltype="cf_sql_varchar" maxlength="100">,
-                    <cfqueryparam value="#arguments.info.email#" cfsqltype="cf_sql_varchar" maxlength="100">,
-                    <cfqueryparam value="#arguments.info.phone#" cfsqltype="cf_sql_varchar" maxlength="20">
-                )
-            </cfquery>
-            <cfquery name="qGetId" datasource="#this.datasource#">
-                SELECT LAST_INSERT_ID() AS id
-            </cfquery>
-            <cfset newId = qGetId.id>
-        <cfcatch type="any">
-            <cflog file="appDebug" text="controller.createCustomer error: #cfcatch.message#">
-            <cfset newId = 0>
-        </cfcatch>
-        </cftry>
-        <cfreturn newId>
+    <!-- ADD -->
+    <cffunction name="createCustomer" access="public" returntype="struct">
+    <cfargument name="info" type="struct">
+
+    <cfif not len(info.name)>
+        <cfreturn { success=false, message="Name required" }>
+    </cfif>
+
+    <cfif not len(info.email)>
+        <cfreturn { success=false, message="Email required" }>
+    </cfif>
+
+    <cfset application.customerService.addCustomer(info)>
+
+    <cfreturn {
+    success = true,
+    message = "Customer added successfully"
+}>
+
+
+</cffunction>
+
+
+    <!-- EDIT -->
+    <cffunction name="editCustomer" access="public" returntype="struct">
+        <cfargument name="info" type="struct">
+
+        <cfset application.customerService.updateCustomer(info)>
+        <cfreturn { success=true }>
     </cffunction>
 
-    <cffunction name="editCustomer" access="public" returntype="numeric" output="false">
-        <cfargument name="info" type="struct" required="true">
-        <cfset var ok = 0>
-        <cftry>
-            <cfif structKeyExists(arguments.info, "id")>
-                <cfquery datasource="#this.datasource#" name="qUpdate">
-                    UPDATE customers
-                    SET
-                        name = <cfqueryparam value="#arguments.info.name#" cfsqltype="cf_sql_varchar" maxlength="100">,
-                        email = <cfqueryparam value="#arguments.info.email#" cfsqltype="cf_sql_varchar" maxlength="100">,
-                        phone = <cfqueryparam value="#arguments.info.phone#" cfsqltype="cf_sql_varchar" maxlength="20">
-                    WHERE id = <cfqueryparam value="#arguments.info.id#" cfsqltype="cf_sql_integer">
-                </cfquery>
-                <cfset ok = arguments.info.id>
-            </cfif>
-        <cfcatch type="any">
-            <cflog file="appDebug" text="controller.editCustomer error: #cfcatch.message#">
-            <cfset ok = 0>
-        </cfcatch>
-        </cftry>
-        <cfreturn ok>
-    </cffunction>
+    <!-- DELETE -->
+    <cffunction name="deleteCustomer" access="public" returntype="struct">
+        <cfargument name="id">
 
-    <cffunction name="deleteCustomer" access="public" returntype="boolean" output="false">
-        <cfargument name="id" required="true">
-        <cfset var ok = false>
-        <cftry>
-            <cfquery datasource="#this.datasource#" name="qDel">
-                DELETE FROM customers
-                WHERE id = <cfqueryparam value="#arguments.id#" cfsqltype="cf_sql_integer">
-            </cfquery>
-            <cfset ok = true>
-        <cfcatch type="any">
-            <cflog file="appDebug" text="controller.deleteCustomer error: #cfcatch.message#">
-            <cfset ok = false>
-        </cfcatch>
-        </cftry>
-        <cfreturn ok>
+        <cfset application.customerService.deleteCustomer(id)>
+        <cfreturn { success=true }>
     </cffunction>
 
 </cfcomponent>
