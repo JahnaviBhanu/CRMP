@@ -25,39 +25,37 @@
   </cffunction>
 
   <!--- Session start --->
- <cffunction name="onSessionStart" returnType="void" output="false">
-    <cfset session.isLoggedIn = false>
+<cffunction name="onSessionStart" returnType="void" output="false">
+    <!-- nothing here -->
 </cffunction>
-
-
 
 <cffunction name="onRequestStart" returnType="boolean" output="true">
     <cfargument name="targetPage" required="true">
 
-    <!--- Allow scheduler --->
-    <cfif structKeyExists(request, "isScheduler") AND request.isScheduler>
-        <cfreturn true>
-    </cfif>
+    <cfset var fuse = structKeyExists(url,"fuse") ? lcase(url.fuse) : "login">
+    <cfset var publicFuses = "login,register,forgotpassword,resetpassword">
 
-    <cfset var pageName = lcase(getFileFromPath(arguments.targetPage))>
+    <!-- if user NOT logged in -->
+    <cfif NOT structKeyExists(session,"isLoggedIn") OR session.isLoggedIn NEQ true>
 
-    <cfset var noLayoutPages = "login.cfm,register.cfm,forgotpassword.cfm,resetpassword.cfm,help.cfm,privacy.cfm,contact.cfm">
-
-    <cfif NOT listFindNoCase(noLayoutPages, pageName)>
-        <cfif NOT structKeyExists(session, "isLoggedIn") OR session.isLoggedIn NEQ true>
-            <cflocation url="/CRMP/index.cfm?fuse=login" addtoken="false">
-            <cfreturn false>
+        <!-- trying to access protected page -->
+        <cfif NOT listFindNoCase(publicFuses, fuse)>
+            <cflocation 
+                url="/CRMP/index.cfm?fuse=login&msg=sessionExpired"
+                addtoken="false">
         </cfif>
+
     </cfif>
 
-    <cfif NOT listFindNoCase(noLayoutPages, pageName)>
+    <!-- include header only for protected pages -->
+    <cfif listFindNoCase(publicFuses, fuse) EQ 0>
         <cfinclude template="/CRMP/includes/header.cfm">
     </cfif>
-    
-    <!--- Disable client caching --->
-    <cfheader name="Cache-Control" value="no-cache, no-store, must-revalidate">
+
+    <!-- prevent browser cache -->
+    <cfheader name="Cache-Control" value="no-store, no-cache, must-revalidate, max-age=0">
     <cfheader name="Pragma" value="no-cache">
-    <cfheader name="Expires" value="-1">
+    <cfheader name="Expires" value="0">
 
     <cfreturn true>
 </cffunction>

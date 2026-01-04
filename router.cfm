@@ -4,7 +4,8 @@
 </cfif>
 
 <!--- Ensure url.fuse exists and normalize it --->
-<cfparam name="url.fuse" default="home">
+<cfparam name="url.fuse" default="login">
+
 <cfset fuse = lcase(trim(url.fuse))>
 
 <!--- Default url params --->
@@ -32,6 +33,10 @@
     </cftry>
 
     <cfinclude template="views/home.cfm">
+
+    <cfelseif fuse eq "login">
+    <cfinclude template="/CRMP/login.cfm">
+
 
 <cfelseif fuse eq "profile">
 
