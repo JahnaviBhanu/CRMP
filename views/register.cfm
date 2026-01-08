@@ -1,69 +1,80 @@
 <cfset successMsg = "">
 <cfset errorMsg = "">
+<cfset registrationSuccess = false>
 <cfparam name="step" default="register">
 
-<!-- STEP 1: Send OTP -->
+<!-- ================= STEP 1: SEND OTP ================= -->
 <cfif structKeyExists(form, "sendOTP")>
+
     <cfset username = trim(form.username)>
     <cfset password = trim(form.password)>
     <cfset confirmPassword = trim(form.confirmPassword)>
     <cfset email = trim(form.email)>
 
-    <!-- Check if passwords match -->
+    <!-- Password match -->
     <cfif password NEQ confirmPassword>
         <cfset errorMsg = "❌ Passwords do not match!">
         <cfset step = "register">
+
     <cfelse>
-        <!-- Check password strength -->
+        <!-- Password strength -->
         <cfset validPassword = (
             reFind("[A-Z]", password)
             AND reFind("[a-z]", password)
             AND reFind("[0-9]", password)
             AND reFind("[@##$%&*!?]", password)
-            AND len(trim(password)) GTE 8
+            AND len(password) GTE 8
         )>
 
         <cfif NOT validPassword>
-            <cfset errorMsg = "⚠ Weak password! Must contain A-Z, a-z, number & special char, and at least 8 characters.">
+            <cfset errorMsg = "⚠ Password must contain A-Z, a-z, number, special char & min 8 chars">
             <cfset step = "register">
-        <cfelse>
 
-            <!-- CHECK IF USERNAME EXISTS -->
+        <cfelse>
+            <!-- Username exists check -->
             <cfquery name="checkUser" datasource="crmp_db">
-                SELECT username
-                FROM users
+                SELECT username FROM users
                 WHERE username = <cfqueryparam value="#username#" cfsqltype="cf_sql_varchar">
             </cfquery>
 
             <cfif checkUser.recordCount GT 0>
-                <cfset errorMsg = "Username already exists! Please choose another username.">
+                <cfset errorMsg = "❌ Username already exists!">
                 <cfset step = "register">
+
             <cfelse>
                 <!-- Generate OTP -->
-                <cfset otp = RandRange(100000, 999999)>
-                <cfset session.otp = otp>
+                <cfset session.otp = RandRange(100000, 999999)>
                 <cfset session.otpTime = Now()>
-
-                <!-- Store temporary user info -->
                 <cfset session.tempUser = username>
                 <cfset session.tempPass = password>
                 <cfset session.tempEmail = email>
 
-                <!-- Send OTP email -->
+                <!-- Send OTP -->
                 <cftry>
-                    <cfmail to="#email#" from="mjahnavi875@gmail.com"
-                        subject="Your OTP Verification Code" type="html">
-                        <p>Hello <b>#Replace(username, "<", "&lt;", "all")#</b>,</p>
-                        <p>Your OTP for registration is: <b>#otp#</b></p>
-                        <p>This code will expire in 5 minutes.</p>
-                        <p>Thank you,<br>CRMP Support Team</p>
+                    <cfmail
+                        to="#email#"
+                        from="mjahnavi875@gmail.com"
+                        subject="Your OTP Verification Code"
+                        server="smtp.gmail.com"
+                        username="mjahnavi875@gmail.com"
+                        password="onnnmvyrpyyhchwx"
+                        port="587"
+                        usetls="yes"
+                        type="html">
+
+                        <p>Hello <b>#EncodeForHTML(username)#</b>,</p>
+                        <p>Your OTP is: <b>#session.otp#</b></p>
+                        <p>Valid for 2 minutes.</p>
+
                     </cfmail>
 
+                    <cfset successMsg = "✅ OTP sent successfully to your email">
                     <cfset step = "verify">
 
-                    <cfcatch type="any">
-                        <cfset errorMsg = "⚠️ Failed to send OTP. Please check mail settings.<br>Error: #cfcatch.message#">
-                    </cfcatch>
+                <cfcatch>
+                    <cfset errorMsg = "❌ OTP send failed. Mail configuration issue.">
+                    <cfset step = "register">
+                </cfcatch>
                 </cftry>
 
             </cfif>
@@ -71,21 +82,50 @@
     </cfif>
 </cfif>
 
-<!-- STEP 2: Verify OTP -->
-<cfif structKeyExists(form, "verifyOTP")>
-    <cfset userOTP = trim(form.otp)>
-    <cfset correctOTP = session.otp>
-    <cfset otpTime = session.otpTime>
-    <cfset minutesPassed = dateDiff("n", otpTime, now())>
+<!-- ================= RESEND OTP ================= -->
+<cfif structKeyExists(form,"resendOTP")
+    AND structKeyExists(session,"tempEmail")
+    AND NOT structKeyExists(form,"sendOTP")
+    AND NOT structKeyExists(form,"verifyOTP")>
 
-    <cfif minutesPassed GT 5>
-        <cfset errorMsg = "❌ OTP expired. Please register again.">
-        <cfset structClear(session)>
-        <cfset step = "register">
-    <cfelseif userOTP EQ correctOTP>
-        <!-- Insert into database -->
+    <cfset session.otp = RandRange(100000, 999999)>
+    <cfset session.otpTime = Now()>
+
+    <cfmail
+        to="#session.tempEmail#"
+        from="mjahnavi875@gmail.com"
+        subject="Resent OTP"
+        server="smtp.gmail.com"
+        username="mjahnavi875@gmail.com"
+        password="onnnmvyrpyyhchwx"
+        port="587"
+        usetls="yes"
+        type="html">
+
+        <p>Your new OTP is: <b>#session.otp#</b></p>
+
+    </cfmail>
+
+    <cfset successMsg = "✅ New OTP sent successfully">
+    <cfset step = "verify">
+</cfif>
+
+<!-- ================= VERIFY OTP ================= -->
+<cfif structKeyExists(form,"verifyOTP")>
+
+    <cfset userOTP = trim(form.otp)>
+    <cfset secondsPassed = dateDiff("s", session.otpTime, now())>
+
+    <cfif secondsPassed GT 120>
+        <cfset errorMsg = "❌ OTP expired. Please click Resend OTP.">
+        <cfset step = "verify">
+        <cfabort>
+    </cfif>
+
+    <cfif userOTP EQ session.otp>
+
         <cfquery datasource="crmp_db">
-            INSERT INTO users (username, password, email)
+            INSERT INTO users (username,password,email)
             VALUES (
                 <cfqueryparam value="#session.tempUser#" cfsqltype="cf_sql_varchar">,
                 <cfqueryparam value="#session.tempPass#" cfsqltype="cf_sql_varchar">,
@@ -93,10 +133,11 @@
             )
         </cfquery>
 
-        <cfset successMsg = "✅ User registered successfully! You can now login.">
         <cfset structClear(session)>
+        <cfset registrationSuccess = true>
+
     <cfelse>
-        <cfset errorMsg = "❌ Invalid OTP. Please try again.">
+        <cfset errorMsg = "❌ Invalid OTP">
         <cfset step = "verify">
     </cfif>
 </cfif>
@@ -104,60 +145,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration (with OTP)</title>
+    <title>Register</title>
     <link rel="stylesheet" href="../css/register.css">
 </head>
 <body>
-    <div class="container">
-        <h2>User Registration with OTP Verification</h2>
 
-        <!-- ✅ SUCCESS -->
-        <cfif successMsg NEQ "">
-            <div class="success-box"><cfoutput>#successMsg#</cfoutput></div>
+<div class="container">
+    <h2>User Registration</h2>
 
-        <!-- ⚠️ ERROR -->
-        <cfelseif errorMsg NEQ "">
-            <div class="error-box"><cfoutput>#errorMsg#</cfoutput></div>
-        </cfif>
+    <cfif successMsg NEQ "">
+        <div class="success-box"><cfoutput>#successMsg#</cfoutput></div>
+    <cfelseif errorMsg NEQ "">
+        <div class="error-box"><cfoutput>#errorMsg#</cfoutput></div>
+    </cfif>
 
-        <!-- STEP 1 FORM -->
-       <!-- STEP 1 FORM -->
-<cfif step EQ "register" AND successMsg EQ "">
-    <form method="post" action="register.cfm">
-        <input type="text" name="username" placeholder="Username" required>
-         <input type="email" name="email" placeholder="Email Address" required>
+    <!-- REGISTER FORM -->
+    <cfif step EQ "register">
+        <form method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
 
-        <div class="password-wrapper">
             <input type="password" name="password" id="password" placeholder="Password" required>
-        </div>
-
-        <div class="password-wrapper">
             <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
-        </div>
 
-        <div class="show-password-wrapper">
-            <input type="checkbox" id="showPassword">
-            <label for="showPassword" class="show-password-label">Show password</label>
-        </div>
+            <div>
+                <input type="checkbox" id="showPassword">
+                <label for="showPassword">Show Password</label>
+            </div>
 
-       
-        <button type="submit" name="sendOTP">Send OTP</button>
-    </form>
+            <button type="submit" name="sendOTP">Send OTP</button>
+        </form>
+    </cfif>
+
+    <!-- VERIFY FORM -->
+    <cfif step EQ "verify">
+        <form method="post">
+            <input type="text" name="otp" placeholder="Enter OTP" >
+
+            <div id="timer" style="color:red;font-weight:bold;">02:00</div>
+
+            <button type="submit" name="verifyOTP">Verify OTP</button>
+            <button type="submit" name="resendOTP" id="resendBtn" disabled>Resend OTP</button>
+        </form>
+    </cfif>
+
+</div>
+
+<!-- ✅ SUCCESS ALERT + REDIRECT -->
+<cfif registrationSuccess>
+<script>
+    alert("✅ User registered successfully!");
+    window.location.href = "/CRMP/login.cfm";
+</script>
 </cfif>
 
+<script src="/CRMP/Js/registration.js"></script>
 
-        <!-- STEP 2 FORM -->
-        <cfif step EQ "verify" AND successMsg EQ "">
-            <form method="post" action="register.cfm">
-                <input type="text" name="otp" placeholder="Enter OTP" required>
-                <button type="submit" name="verifyOTP">Verify OTP</button>
-            </form>
-        </cfif>
-
-        <div class="link">
-            Already have an account? <a href="/CRMP/login.cfm">Login Here</a>
-        </div>
-    </div>
-    <script src="../Js/registration.js"></script>
 </body>
 </html>
