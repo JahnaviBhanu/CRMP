@@ -1,5 +1,6 @@
 <cfset successMsg = "">
 <cfset errorMsg = "">
+<cfset registrationSuccess = false>
 <cfparam name="step" default="register">
 
 <!-- ================= STEP 1: SEND OTP ================= -->
@@ -37,7 +38,7 @@
             </cfquery>
 
             <cfif checkUser.recordCount GT 0>
-                <cfset errorMsg = "Username already exists!">
+                <cfset errorMsg = "❌ Username already exists!">
                 <cfset step = "register">
 
             <cfelse>
@@ -67,6 +68,7 @@
 
                     </cfmail>
 
+                    <cfset successMsg = "✅ OTP sent successfully to your email">
                     <cfset step = "verify">
 
                 <cfcatch>
@@ -74,6 +76,7 @@
                     <cfset step = "register">
                 </cfcatch>
                 </cftry>
+
             </cfif>
         </cfif>
     </cfif>
@@ -120,6 +123,7 @@
     </cfif>
 
     <cfif userOTP EQ session.otp>
+
         <cfquery datasource="crmp_db">
             INSERT INTO users (username,password,email)
             VALUES (
@@ -130,7 +134,7 @@
         </cfquery>
 
         <cfset structClear(session)>
-        <cflocation url="/CRMP/login.cfm" addtoken="false">
+        <cfset registrationSuccess = true>
 
     <cfelse>
         <cfset errorMsg = "❌ Invalid OTP">
@@ -155,7 +159,7 @@
         <div class="error-box"><cfoutput>#errorMsg#</cfoutput></div>
     </cfif>
 
-    <!-- REGISTER -->
+    <!-- REGISTER FORM -->
     <cfif step EQ "register">
         <form method="post">
             <input type="text" name="username" placeholder="Username" required>
@@ -173,10 +177,10 @@
         </form>
     </cfif>
 
-    <!-- VERIFY -->
+    <!-- VERIFY FORM -->
     <cfif step EQ "verify">
         <form method="post">
-            <input type="text" name="otp" placeholder="Enter OTP">
+            <input type="text" name="otp" placeholder="Enter OTP" >
 
             <div id="timer" style="color:red;font-weight:bold;">02:00</div>
 
@@ -186,6 +190,15 @@
     </cfif>
 
 </div>
+
+<!-- ✅ SUCCESS ALERT + REDIRECT -->
+<cfif registrationSuccess>
+<script>
+    alert("✅ User registered successfully!");
+    window.location.href = "/CRMP/login.cfm";
+</script>
+</cfif>
+
 <script src="/CRMP/Js/registration.js"></script>
 
 </body>
